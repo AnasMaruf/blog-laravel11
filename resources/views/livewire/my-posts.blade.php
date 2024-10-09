@@ -1,5 +1,5 @@
 <div class="card">
-    @if(session()->has('message'))
+    @if (session()->has('message'))
     <span class="alert alert-success p-2 my-2">{{ session("message") }}</span>
     @endif
     <div class="card-body">
@@ -17,10 +17,11 @@
                         class="card-footer text-center text-white"
                         style="background-color: #98a0e3"
                     >
-                        1
+                        {{ $follower_count }}
                     </div>
                 </div>
             </div>
+            <livewire:post-data-counter />
             <div class="col">
                 <div
                     class="card"
@@ -31,7 +32,7 @@
                         class="card-footer text-center text-white"
                         style="background-color: #3ade9f"
                     >
-                        1
+                        {{ $comment_count }}
                     </div>
                 </div>
             </div>
@@ -50,27 +51,26 @@
                 </div>
             </div>
         </div>
+
         <!-- Table with stripped rows -->
         <table class="table datatable">
             <thead>
                 <tr>
-                    <th scope="col">NO</th>
+                    <th scope="col">#</th>
                     <th scope="col">Image</th>
                     <th scope="col">Title</th>
                     <th scope="col">Content</th>
-                    <th data-type="date" data-format="YYYY/DD/MM" scope="col">
-                        Posted At
-                    </th>
+                    <th scope="col">Posted At</th>
                     <th scope="col">Last Updated</th>
                     <th scope="col" colspan="2">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($posts as $item)
-                <tr wire:key="{{ $item->id }}">
-                    <th class="text-center" scope="row">
-                        {{ $loop->iteration }}
-                    </th>
+                @foreach ($posts as $item)
+                {{-- for livewire to keep track and work efficient with loops use keys to uniquely identify each row in a loop --}}
+                <tr wire:key="{{$item->id}}">
+                    <th scope="row">{{$loop->iteration}}</th>
+                    <td>{{$item->post_title}}</td>
                     <td>
                         <img
                             height="40px"
@@ -79,15 +79,14 @@
                             alt="post image"
                         />
                     </td>
-                    <td>{{ $item->post_title }}</td>
-                    <td>{{ $item->content }}</td>
-                    <td>{{ $item->created_at }}</td>
-                    <td>{{ $item->updated_at }}</td>
+                    <td>{{str($item->content)->words(10)}}</td>
+                    <td>{{$item->created_at}}</td>
+                    <td>{{$item->updated_at}}</td>
                     <td>
                         <a
-                            href="/edit/post/{{ $item->id }}"
-                            class="btn btn-primary btn-sm"
+                            href="/edit/post/{{$item->id}}"
                             wire:navigate
+                            class="btn btn-primary btn-sm"
                             >Edit</a
                         >
                     </td>

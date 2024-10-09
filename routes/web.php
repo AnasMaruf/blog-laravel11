@@ -37,5 +37,6 @@ Route::get('/edit/post/{post_id}', [UserController::class, 'loadEditPost'])->mid
 Route::get('/delete/post/{post_id}', [UserController::class, 'deletePost'])->middleware('user');
 Route::get('/view/post/{id}', [UserController::class, 'loadPostPage'])->middleware('user');
 Route::get('/profile', [UserController::class,'loadProfile'])->middleware('user');
+Route::get('/view/profile/{user_id}',[UserController::class,'loadGuestProfile'])->middleware('user');
 
 Route::get('/admin/home', [AdminController::class, 'loadHomePage'])->middleware('admin');

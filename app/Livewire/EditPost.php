@@ -26,7 +26,6 @@ class EditPost extends Component
         $this->validate([
             'post_title' => 'required',
             'content' => 'required',
-            'photo' => 'required|image|mimes:jpg,jpeg,png|max:2048'
         ]);
         if ($this->photo == null) {
             Post::where('id',$this->post->id)->update([
@@ -49,7 +48,7 @@ class EditPost extends Component
             'photo' => $photo_name,
             ]);
 
-            
+
         }
         session()->flash('message', 'The post was successfully updated!');
         return $this->redirect('/my/posts',navigate: true);

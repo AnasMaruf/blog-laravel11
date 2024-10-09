@@ -13,9 +13,7 @@ class ProfileImage extends Component
         $this->user_id = $userId;
         $user_data = UserProfile::where('user_id',$this->user_id)
         ->first(['image']);
-        // ooh here i assigned the whole object from user profile to user_image which is wrong..
-        // now assign image to user_image
-        $this->user_image = $user_data->image ?? ''; //if empty
+        $this->user_image = $user_data->image ?? '';
     }
     public function render()
     {
